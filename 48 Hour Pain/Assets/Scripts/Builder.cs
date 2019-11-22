@@ -37,7 +37,7 @@ public class Builder : MonoBehaviour
 
 	public void placeBarricade()
 	{
-		if (Barricade >= 1 && Input.GetKeyDown("l"))
+		if (Barricade >= 1 && Input.GetKeyDown(KeyCode.L))
 		{
 			Barricade--;
 			Instantiate(barricadeObject, transform.position, Quaternion.identity);
