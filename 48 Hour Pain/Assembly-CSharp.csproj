@@ -64,6 +64,12 @@
   <ItemGroup>
     <Compile Include="Assets\Models\Model.cs" />
     <Compile Include="Assets\Prefabs\Prefab.cs" />
+    <Compile Include="Assets\Scripts\Builder.cs" />
+    <Compile Include="Assets\Scripts\Fighter.cs" />
+    <Compile Include="Assets\Scripts\Fisher.cs" />
+    <Compile Include="Assets\Scripts\FishPool.cs" />
+    <Compile Include="Assets\Scripts\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\Master Unit Script.cs" />
     <Compile Include="Assets\Sound\Sound.cs" />
     <Reference Include="Unity.Timeline.Editor">
