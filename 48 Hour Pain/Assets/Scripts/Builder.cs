@@ -9,8 +9,9 @@ public class Builder : MonoBehaviour
 
 	public int Fish;
 
-	public FishPool fishPool;
+	public FishBucket fishPool;
 	public GameObject barricadeObject;
+
 
 	// Start is called before the first frame update
 	void Start()
@@ -27,11 +28,11 @@ public class Builder : MonoBehaviour
 
 	public void buyBarricade()
 	{
-		if (Fish >= 10 && Input.GetKeyDown(KeyCode.P))
+		if (fishPool.FishInPool >= 10 && Input.GetKeyDown(KeyCode.P))
 		{
 			Debug.LogError("Buying");
 			Barricade++;
-			Fish -= 10;
+			fishPool.FishInPool -= 10;
 		}
 	}
 

@@ -2,19 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishPool : MonoBehaviour
+public class FishBucket : MonoBehaviour
 {
 	public int FishInPool;
-
 	// Start is called before the first frame update
 	void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
