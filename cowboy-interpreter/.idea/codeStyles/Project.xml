@@ -1,9 +1,0 @@
-<component name="ProjectCodeStyleConfiguration">
-  <code_scheme name="Project" version="173">
-    <ScalaCodeStyleSettings>
-      <option name="REPLACE_CASE_ARROW_WITH_UNICODE_CHAR" value="true" />
-      <option name="REPLACE_MAP_ARROW_WITH_UNICODE_CHAR" value="true" />
-      <option name="REPLACE_FOR_GENERATOR_ARROW_WITH_UNICODE_CHAR" value="true" />
-    </ScalaCodeStyleSettings>
-  </code_scheme>
-</component>
