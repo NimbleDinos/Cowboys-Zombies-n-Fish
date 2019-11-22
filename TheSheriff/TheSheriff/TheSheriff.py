@@ -30,4 +30,8 @@ async def test(ctx):
 async def howdy(ctx):
 	await ctx.send("Howdy Partner!")
 
-client.run("NjQ3NTEzNTYyNzY3NTU2NjM4.Xdgymw.a9AqmltyAYbrAoDWeCZ4Vjnp6zM")
+file = open("token.txt", "r")
+token = str(file.read())
+file.close()
+
+client.run(token)
