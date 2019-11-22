@@ -21,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="basicCommands.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TheSheriff.py" />
   </ItemGroup>
   <ItemGroup>
