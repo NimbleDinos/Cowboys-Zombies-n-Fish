@@ -1,0 +1,1 @@
+start cmd.exe /k "C:\Users\computing\Downloads\Cowboys-Zombies-n-Fish\TheSheriff\TheSheriff\TheSheriff.py"
