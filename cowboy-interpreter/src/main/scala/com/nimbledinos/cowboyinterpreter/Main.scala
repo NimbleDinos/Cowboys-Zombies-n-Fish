@@ -15,7 +15,6 @@ import io.circe.generic.auto._
 import io.circe.syntax._
 
 import scala.collection.mutable
-import scala.collection.mutable.Queue
 
 object Main extends App {
 
@@ -29,8 +28,8 @@ object Main extends App {
 
   def commamd: Endpoint[IO, String] =
     get(
-      "command" :: param("action") :: param[Int]("userId") :: paramOption("class") :: paramOption[Int]("x") :: paramOption[Int]("y")
-    ) { (action: String, id: Int, clas: Option[String], x: Option[Int], y: Option[Int]) ⇒
+      "command" :: param("action") :: param[Long]("userId") :: paramOption("class") :: paramOption[Int]("x") :: paramOption[Int]("y")
+    ) { (action: String, id: Long, clas: Option[String], x: Option[Int], y: Option[Int]) ⇒
       val createdAction: Either[CommandCreationException, Action] = Actions.getActionFromValue(action, id, clas, x, y)
       createdAction.fold(error ⇒ BadRequest(error), action ⇒ {
         commandQueue.enqueue(action);
@@ -39,7 +38,8 @@ object Main extends App {
     }
 
   def getCommand: Endpoint[IO, Json] = get("getCommand") {
-    Ok(commandQueue.dequeue().asJson)
+    if (commandQueue.isEmpty) Ok(Action(-1, "emptyQueue").asJson)
+    else Ok(commandQueue.dequeue().asJson)
   }
 
   def helloWorld: Endpoint[IO, Message] = get("hello") {

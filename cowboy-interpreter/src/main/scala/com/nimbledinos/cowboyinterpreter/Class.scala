@@ -1,23 +1,13 @@
 package com.nimbledinos.cowboyinterpreter
 
-sealed abstract class Class
-
 object Class {
 
-  case class Fisher(value: String) extends Class
-
-  case class Attacker(value: String) extends Class
-
-  case class Defender(value: String) extends Class
-
-  case class Builder(value: String) extends Class
-
-  def fromValue(value: String): Either[String, Class] =
+  def fromValue(value: String): Either[String, String] =
     value match {
-      case "fisher"   ⇒ Right(Fisher(value))
-      case "attacker" ⇒ Right(Attacker(value))
-      case "defender" ⇒ Right(Defender(value))
-      case "builder"  ⇒ Right(Builder(value))
+      case "fisher"   ⇒ Right(value)
+      case "attacker" ⇒ Right(value)
+      case "defender" ⇒ Right(value)
+      case "builder"  ⇒ Right(value)
       case _          ⇒ Left(s"${value} is not a valid class")
     }
 }

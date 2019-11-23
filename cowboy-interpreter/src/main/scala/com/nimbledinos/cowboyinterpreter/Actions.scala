@@ -2,7 +2,7 @@ package com.nimbledinos.cowboyinterpreter
 
 import cats.syntax.either._
 
-case class Action(UserID: Int, action: String, clas: Option[Class] = None, x: Option[Int] = None, y: Option[Int] = None)
+case class Action(UserID: Long, action: String, clas: Option[String] = None, x: Int = -1, y: Int = -1)
 
 object Actions {
 
@@ -12,7 +12,7 @@ object Actions {
   val MAX_Y: Int  = 50
   val MIN_XY: Int = 0
 
-  def getActionFromValue(actionString: String, userId: Int, clas: Option[String], x: Option[Int], y: Option[Int]): Either[CommandCreationException, Action] =
+  def getActionFromValue(actionString: String, userId: Long, clas: Option[String], x: Option[Int], y: Option[Int]): Either[CommandCreationException, Action] =
     actionString match {
       case "join"        ⇒ Right(Action(userId, actionString))
       case "chooseClass" ⇒ validateChooseClass(userId, actionString, clas)
@@ -20,7 +20,7 @@ object Actions {
       case "action"      ⇒ Right(Action(userId, actionString))
     }
 
-  def validateChooseClass(userID: Int, action: String, clas: Option[String]): Either[CommandCreationException, Action] =
+  def validateChooseClass(userID: Long, action: String, clas: Option[String]): Either[CommandCreationException, Action] =
     clas
       .toRight("Class was not present")
       .flatMap { classValue ⇒
@@ -29,7 +29,7 @@ object Actions {
       }
       .leftMap(CommandCreationException)
 
-  def validateMovement(userID: Int, action: String, x: Option[Int], y: Option[Int]): Either[CommandCreationException, Action] = {
+  def validateMovement(userID: Long, action: String, x: Option[Int], y: Option[Int]): Either[CommandCreationException, Action] = {
     def validateCoord(value: Int, isX: Boolean): Option[Int] =
       if (isX)
         if (MIN_XY to MAX_X contains (value)) Some(value)
@@ -42,6 +42,6 @@ object Actions {
       yCoord     ← y
       validatedX ← validateCoord(xCoord, isX = true)
       validatedY ← validateCoord(yCoord, isX = false)
-    } yield Action(userID, action, x = Some(validatedX), y = Some(validatedY))
+    } yield Action(userID, action, x = validatedX, y = validatedY)
   }.toRight(CommandCreationException("An error occurred when creating the movement command"))
 }
