@@ -1,6 +1,9 @@
 import discord
+import discord.ext
 from discord.ext.commands import Bot
 from discord.ext import commands
+
+from UserInfo import *
 
 bot_prefix = "?"
 client = commands.Bot(command_prefix=bot_prefix)
@@ -23,6 +26,12 @@ async def on_message(message):
 	await client.process_commands(message)
 
 @client.command()
+async def joingame(ctx):
+	userID = ctx.message.author.id
+	userName = ctx.message.author.name
+	await newPlayer(userID, userName)
+
+@client.command()
 async def test(ctx):
 	await ctx.send("Test Command")
 
@@ -33,5 +42,4 @@ async def howdy(ctx):
 file = open("token.txt", "r")
 token = str(file.read())
 file.close()
-
 client.run(token)
