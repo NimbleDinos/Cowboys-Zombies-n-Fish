@@ -21,10 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="basicCommands.py">
+    <Compile Include="TheSheriff.py" />
+    <Compile Include="UserInfo.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TheSheriff.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SheriffRun.bat" />
