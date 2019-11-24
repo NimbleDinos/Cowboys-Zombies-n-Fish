@@ -9,9 +9,15 @@ lazy val root = (project in file("."))
     version := "0.0.1-SNAPSHOT",
     scalaVersion := "2.12.9",
     libraryDependencies ++= Seq(
-      "com.github.finagle" %% "finchx-core"  % finchVersion,
-      "com.github.finagle" %% "finchx-circe"  % finchVersion,
+      "com.github.finagle" %% "finchx-core" % finchVersion,
+      "com.github.finagle" %% "finchx-circe" % finchVersion,
       "io.circe" %% "circe-generic" % circeVersion,
-      "org.scalatest"      %% "scalatest"    % scalatestVersion % "test"
+      "org.scalatest" %% "scalatest" % scalatestVersion % "test"
     )
   )
+
+assemblyJarName in assembly := "cowboy-interpreter.jar"
+assemblyMergeStrategy in assembly := {
+  case PathList("META-INF", xs@_*) => MergeStrategy.discard
+  case x => MergeStrategy.first
+}
