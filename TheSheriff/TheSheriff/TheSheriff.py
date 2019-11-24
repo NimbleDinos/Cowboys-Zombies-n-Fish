@@ -7,7 +7,7 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 
 import UserInfo
-import requests
+#import requests
 
 bot_prefix = "?"
 client = commands.Bot(command_prefix=bot_prefix)
@@ -120,6 +120,7 @@ async def on_message(message):
 
 	if "texttest" in message.content.lower():
 		await message.channel.send("on_message test")
+		await UserInfo.infoUpdate()
 
 	await client.process_commands(message)
 

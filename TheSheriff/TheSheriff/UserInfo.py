@@ -1,3 +1,4 @@
+import datetime
 
 async def newPlayer(userID, userName, playerList):
 	
@@ -14,9 +15,14 @@ async def playerCommand(userID, playerList):
 	else:
 		return 1
 
-async def infoUpdate(ctx):
-	await ctx.send("")
-	return 0
+async def infoUpdate():
+	seconds = datetime.datetime.now().second
+	if seconds % 15 == 0:
+		return 0
+	elif seconds % 60 == 0:
+		return 1
+	else:
+		return 2
 
 async def help():
 	return 0
