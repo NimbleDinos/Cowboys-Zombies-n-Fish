@@ -18,6 +18,8 @@ playerList = {}
 
 placeList = ['near', 'mid', 'far']
 acceptedClasses = ['fisher', 'attacker', 'builder']
+acceptedPosition = ['up', 'down', 'left', 'right']
+acceptedBuild = ['beartrap', 'barricade']
 
 baseUrl = "http://localhost:8081/"
 
@@ -48,7 +50,7 @@ async def joingame(ctx):
 	elif returned == 0:
 		try:
 			playerList[userID] = 1
-			joinGameUrl = baseUrl + "command?action=join&userId={0}".format(userID)
+			joinGameUrl = baseUrl + "command?action=join&userId={0}&userName={1}".format(userID, userName)
 			response = requests.get(joinGameUrl)
 			if response.status_code == 200:
 				await ctx.send(userName + " you have entered the game!")
@@ -56,7 +58,7 @@ async def joingame(ctx):
 			await ctx.send("Whoa there {0}! Somethin' ain't right here".format(userName))
 
 @client.command()
-async def chooseClass(ctx, clas):
+async def chooseclass(ctx, clas):
 	userID = ctx.message.author.id
 	userName = ctx.message.author.name
 
@@ -67,7 +69,7 @@ async def chooseClass(ctx, clas):
 	else:
 		if clas in acceptedClasses:
 			try:
-				chooseClassGameurl = baseUrl + "command?action=chooseClass&userId={0}&class={1}".format(userID, clas)
+				chooseClassGameurl = baseUrl + "command?action=chooseClass&userId={0}&userName={1}&class={2}".format(userID, userName, clas)
 				response = requests.get(chooseClassGameurl)
 				if response.status_code == 200:
 					await ctx.send("Good luck out there, {0}!".format(userName))
@@ -93,7 +95,7 @@ async def move(ctx, x, y):
 
 		if (MIN_XY <= int(x) <= MAX_X) & (MIN_XY <= int(y) <= MAX_Y):
 			try:
-				moveUrl = baseUrl + "command?action=move&userId={0}&x={1}&y={2}".format(userID, x, y)
+				moveUrl = baseUrl + "command?action=move&userId={0}&userName={1}&x={2}&y={3}".format(userID, userName, x, y)
 				response = requests.get(moveUrl)
 				if response.status_code == 200:
 					await ctx.send("See ya soon cowboy")
@@ -104,7 +106,7 @@ async def move(ctx, x, y):
 			await ctx.send("I'm afraid ({0}, {1}) is out of bounds {2}".format(x, y, userName))
 
 @client.command()
-async def action(ctx):
+async def build(ctx, object, where):
 	userID = ctx.message.author.id
 	userName = ctx.message.author.name
 	
@@ -113,17 +115,41 @@ async def action(ctx):
 	elif playerList[userID] == 1:
 		await ctx.send("Let's not rush {0}! You already did ya thing this turn!".format(userName))
 	else:
+		if object in acceptedBuild:
+			if where in acceptedPosition:
+				try:
+					joinGameUrl = baseUrl + "command?action=action&userId={0}&userName={1}&builder={2}-{3}".format(userID, userName, object, where)
+					response = requests.get(joinGameUrl)
+					if response.status_code == 200:
+						await ctx.send(userName + " go do your thing partner!")
+						playerList[userID] = 1
+				except:
+					await ctx.send("Whoa there {0}! Somethin' ain't right here".format(userName))
+			else:
+				await ctx.send("Sorry partner, things can't be built there!")
+		else:
+			await ctx.send("What's a '{0}', {1}?".format(object, userName))
+
+
+@client.command()
+async def action(ctx):
+	userID = ctx.message.author.id
+	userName = ctx.message.author.name
+
+	if userID not in playerList:
+		await ctx.send("Whoa there {0}, you need to join the game first!".format(userName))
+	elif playerList[userID] == 1:
+		await ctx.send("Let's not rush {0}! You already did ya thing this turn!".format(userName))
+	else:
 		try:
-			for item in playerList:
-				if item == userID:
-					print(item)
-			joinGameUrl = baseUrl + "command?action=action&userId={0}".format(userID)
+			joinGameUrl = baseUrl + "command?action=action&userId={0}&userName={1}".format(userID, userName)
 			response = requests.get(joinGameUrl)
 			if response.status_code == 200:
 				await ctx.send(userName + " go do your thing partner!")
 				playerList[userID] = 1
 		except:
-			await ctx.send("Whoa there {0}! Somethin' ain't right here".format(userName))
+				await ctx.send("Whoa there {0}! Somethin' ain't right here".format(userName))
+
 
 @client.command()
 async def test(ctx):
